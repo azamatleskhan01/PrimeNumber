@@ -1,0 +1,17 @@
+Goroutine-based Prime Checker
+How It Works:
+
+Divisor Range Splitting:
+The range from 2 to the square root of the number is divided into several subranges.
+Each subrange is checked by a separate goroutine.
+Launching Goroutines:
+We launch multiple goroutines to check divisors within these subranges. The number of goroutines is determined by the variable numGoroutines, and each goroutine is assigned a specific range of divisors to check.
+Handling Results via Channel:
+Results from each goroutine are sent to a channel. If any goroutine finds a divisor, the result false is returned (meaning the number is not prime). Otherwise, the result is true (meaning the number is prime).
+Channel Usage:
+A channel ch is created, through which goroutines send their results: true if no divisor is found (indicating the number could be prime) or false if a divisor is found (indicating the number is not prime).
+Goroutines:
+Each goroutine performs the divisor check in its assigned range and sends the result to the channel.
+Main Thread:
+The main thread receives the results via the channel. If any goroutine sends false (indicating the number is not prime), the main thread immediately returns false.
+If all goroutines send true (indicating no divisors were found), the main thread concludes that the number is prime and returns true.
